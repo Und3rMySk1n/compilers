@@ -374,10 +374,12 @@ char *yytext;
 #include "lexglobal.h"
 #include <stdio.h>
 
+
+#define YY_DECL int yylex(struct LexContext *ctx)
 #define fileno _fileno
 #pragma warning(disable:4013)
 
-#line 381 "lex.yy.c"
+#line 383 "lex.yy.c"
 
 /* Macros after this point can all be overridden by user definitions in
  * section 1.
@@ -528,10 +530,10 @@ YY_DECL
 	register char *yy_cp, *yy_bp;
 	register int yy_act;
 
-#line 13 "lexer_grammar.l"
+#line 15 "lexer_grammar.l"
 
            
-#line 535 "lex.yy.c"
+#line 537 "lex.yy.c"
 
 	if ( yy_init )
 		{
@@ -616,72 +618,72 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 15 "lexer_grammar.l"
+#line 17 "lexer_grammar.l"
 {
   return TK_PLUS;
 }
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 19 "lexer_grammar.l"
+#line 21 "lexer_grammar.l"
 {
   return TK_MINUS;
 }
 	YY_BREAK
 case 3:
 YY_RULE_SETUP
-#line 23 "lexer_grammar.l"
+#line 25 "lexer_grammar.l"
 {
   return TK_STAR;
 }
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 27 "lexer_grammar.l"
+#line 29 "lexer_grammar.l"
 {
   return TK_SLASH;
 }
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 31 "lexer_grammar.l"
+#line 33 "lexer_grammar.l"
 {
   return TK_PERCENT;
 }
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 35 "lexer_grammar.l"
+#line 37 "lexer_grammar.l"
 {
   return TK_LPAREN;
 }
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 39 "lexer_grammar.l"
+#line 41 "lexer_grammar.l"
 {
   return TK_RPAREN;
 }
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 43 "lexer_grammar.l"
+#line 45 "lexer_grammar.l"
 {
-  tokenValue = atoi(yytext);   
+  ctx->tokenValue = atoi(yytext);   
   return TK_NUMBER;
 }
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 48 "lexer_grammar.l"
+#line 50 "lexer_grammar.l"
 
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 50 "lexer_grammar.l"
+#line 52 "lexer_grammar.l"
 ECHO;
 	YY_BREAK
-#line 685 "lex.yy.c"
+#line 687 "lex.yy.c"
 case YY_STATE_EOF(INITIAL):
 	yyterminate();
 
@@ -1567,7 +1569,7 @@ int main()
 	return 0;
 	}
 #endif
-#line 50 "lexer_grammar.l"
+#line 52 "lexer_grammar.l"
 
 
 

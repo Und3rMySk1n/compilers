@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "CalcParser.h"
 #include "Token.h"
+#include "lexglobal.h"
 #include <iostream>
 
 typedef struct yy_buffer_state *YY_BUFFER_STATE;
@@ -8,9 +9,9 @@ typedef struct yy_buffer_state *YY_BUFFER_STATE;
 extern "C"
 {
 	int tokenValue;
-	int yylex();
 	YY_BUFFER_STATE yy_scan_string(const char *yy_str);
 	void yy_delete_buffer(YY_BUFFER_STATE);
+	int yylex(LexContext *ctx);
 }
 
 bool ParseExpr(std::string const& expr)
@@ -20,16 +21,17 @@ bool ParseExpr(std::string const& expr)
 
     CCalcParser parser;
 
-	char *inputString = new char[expr.length() + 1];
-	strcpy(inputString, expr.c_str());
-	yy_scan_string(inputString);
+	std::string mutExpr = expr;
+	yy_scan_string(&mutExpr[0]);
 
     SToken token;
     int tokenId;
+	LexContext ctx;
     do
     {
-        tokenId = yylex();
-		token.value = tokenValue;
+        tokenId = yylex(&ctx);
+		token.value = ctx.tokenValue;
+		token.position++;
 
         if (!parser.Advance(tokenId, token))
         {
@@ -37,7 +39,6 @@ bool ParseExpr(std::string const& expr)
         }
     }
     while (tokenId != 0);
-	delete(inputString);
 
     return true;
 }
@@ -45,7 +46,7 @@ bool ParseExpr(std::string const& expr)
 int main()
 {
     std::string line;
-    while (std::getline(std::cin, line))	
+    while (std::getline(std::cin, line))
 	{
         if (!ParseExpr(line))
         {
@@ -55,7 +56,3 @@ int main()
 
     return 0;
 }
-
-
-// Чтобы вернуть структуру, которая содержит код токена и значение цифры,
-// можно использовать atoi(yytext)

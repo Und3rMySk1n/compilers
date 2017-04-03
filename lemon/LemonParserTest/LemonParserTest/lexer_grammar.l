@@ -3,6 +3,8 @@
 #include "lexglobal.h"
 #include <stdio.h>
 
+
+#define YY_DECL int yylex(struct LexContext *ctx)
 #define fileno _fileno
 #pragma warning(disable:4013)
 
@@ -41,7 +43,7 @@
 }
 
 [0-9]+ {
-  tokenValue = atoi(yytext);   
+  ctx->tokenValue = atoi(yytext);   
   return TK_NUMBER;
 }
 
