@@ -118,3 +118,8 @@ expression(X) ::= NUMBER(A).
 {
     X.value = A.value;
 }
+
+expression(X) ::= ID(A).
+{
+    X.value = pParse->GetVariableValue(A.stringId);
+}

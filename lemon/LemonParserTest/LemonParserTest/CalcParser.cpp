@@ -17,7 +17,8 @@ void ParseCalcGrammarTrace(FILE * TraceFILE, char * zTracePrompt);
 #endif
 
 
-CCalcParser::CCalcParser()
+CCalcParser::CCalcParser(CInterpreterContext & context)
+	: m_context(context)
 {
     auto allocate = [](size_t size) -> void* {
         return new (std::nothrow) char[size];
@@ -63,4 +64,14 @@ void CCalcParser::OnStackOverflow()
 void CCalcParser::PrintResult(double value)
 {
     std::cerr << value << std::endl;
+}
+
+void CCalcParser::AssignVariable(unsigned stringId, double value)
+{
+	m_context.AssignVariable(stringId, value);
+}
+
+double CCalcParser::GetVariableValue(unsigned stringId)
+{
+	return m_context.GetVariableValue(stringId);
 }

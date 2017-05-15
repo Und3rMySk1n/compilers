@@ -2,6 +2,8 @@
 #include "CalcParser.h"
 #include "Token.h"
 #include "lexglobal.h"
+#include "StringPool.h"
+#include "InterpreterContext.h"
 #include <iostream>
 
 typedef struct yy_buffer_state *YY_BUFFER_STATE;
@@ -14,13 +16,8 @@ extern "C"
 	int yylex(LexContext *ctx);
 }
 
-bool ParseExpr(std::string const& expr)
+bool ParseExpr(std::string const& expr, CCalcParser &parser)
 {
-	/// Строка ниже включает отладочный вывод LALR-парсера.
-	// parser.StartDebugTrace(stderr);
-
-    CCalcParser parser;
-
 	std::string mutExpr = expr;
 	yy_scan_string(&mutExpr[0]);
 
@@ -48,9 +45,13 @@ bool ParseExpr(std::string const& expr)
 int main()
 {
     std::string line;
+	CStringPool stringPool;
+	CInterpreterContext context(stringPool);
+	CCalcParser parser(context);
+
     while (std::getline(std::cin, line))
 	{
-        if (!ParseExpr(line))
+        if (!ParseExpr(line, parser))
         {
             return 1;
         }

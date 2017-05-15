@@ -6,3 +6,4 @@
 #define TK_LPAREN                          6
 #define TK_RPAREN                          7
 #define TK_NUMBER                          8
+#define TK_ID                              9
