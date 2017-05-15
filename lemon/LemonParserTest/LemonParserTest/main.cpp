@@ -25,8 +25,10 @@ bool ParseExpr(std::string const& expr)
 	yy_scan_string(&mutExpr[0]);
 
     SToken token;
+	token.position = 0;
     int tokenId;
 	LexContext ctx;
+
     do
     {
         tokenId = yylex(&ctx);
